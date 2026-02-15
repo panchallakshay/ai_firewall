@@ -19,7 +19,9 @@ data class FlowStats(
     var downloadBytes: Long = 0,
     var failureCount: Int = 0,
     val startTime: Long = System.currentTimeMillis(),
-    var lastSeenTime: Long = System.currentTimeMillis()
+    var lastSeenTime: Long = System.currentTimeMillis(),
+    var newConnectionsPerMin: Float = 0f,  // Temporal metric
+    var uniqueDestinationsPerMin: Float = 0f  // Temporal metric
 ) {
     /**
      * Calculate packets per second

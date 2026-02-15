@@ -23,6 +23,14 @@ class TCPForwarder(
         private const val TAG = "TCPForwarder"
         private const val SOCKET_TIMEOUT_MS = 30000  // 30 seconds
         private const val BUFFER_SIZE = 32767
+        
+        // TCP Flags
+        const val TCP_FLAG_FIN = 0x01
+        const val TCP_FLAG_SYN = 0x02
+        const val TCP_FLAG_RST = 0x04
+        const val TCP_FLAG_PSH = 0x08
+        const val TCP_FLAG_ACK = 0x10
+        const val TCP_FLAG_URG = 0x20
     }
     
     /**
@@ -335,15 +343,5 @@ class TCPForwarder(
         Log.i(TAG, "Shutting down TCP forwarder...")
         scope.cancel()
         Log.i(TAG, "TCP forwarder shutdown complete")
-    }
-    
-    // TCP Flags
-    companion object {
-        const val TCP_FLAG_FIN = 0x01
-        const val TCP_FLAG_SYN = 0x02
-        const val TCP_FLAG_RST = 0x04
-        const val TCP_FLAG_PSH = 0x08
-        const val TCP_FLAG_ACK = 0x10
-        const val TCP_FLAG_URG = 0x20
     }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shaktix/ui/screens/logs/widgets/log_list_item.dart';
-import 'package:shaktix/ui/screens/logs/widgets/logs_filter_bar.dart';
+import 'widgets/log_list_item.dart';
+import 'widgets/logs_filter_bar.dart';
 import '../../../main.dart';
 import '../../../state/app_state.dart';
 import '../../../theme/app_theme.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shaktix/ui/screens/apps/apps_screen.dart';
-import 'package:shaktix/ui/screens/settings/settings_screen.dart';
+import '../screens/apps/apps_screen.dart';
+import '../screens/settings/settings_screen.dart';
 // ✅ IMPORT PATH CHECK: Ensure this matches your folder structure
 import '../screens/home_screen.dart';
 import '../screens/logs/logs_screen.dart';
