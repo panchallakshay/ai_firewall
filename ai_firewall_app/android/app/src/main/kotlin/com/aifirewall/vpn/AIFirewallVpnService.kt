@@ -245,17 +245,17 @@ class AIFirewallVpnService : VpnService() {
         scope.launch {
             try {
                 val db = FirewallDatabase.getInstance(this@AIFirewallVpnService)
-                db.activityDao().insert(
+                db.activityLogDao().insert(
                     ActivityLogEntity(
                         timestamp = System.currentTimeMillis(),
                         action = decision.action,
-                        domain = decision.domain,
-                        dstIp = decision.destinationIP,
-                        dstPort = decision.destinationPort,
+                        domain = decision.domain ?: "",
+                        ipAddress = decision.destinationIP,
+                        port = decision.destinationPort,
                         protocol = decision.protocol,
                         reason = decision.reason,
-                        confidence = decision.confidence,
-                        severity = decision.severity
+                        appName = "Unknown", // Placeholder
+                        dataUsage = 0 // Placeholder
                     )
                 )
             } catch (e: Exception) {

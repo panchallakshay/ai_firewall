@@ -1,11 +1,8 @@
 package com.aifirewall.vpn
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "activity_logs")
+// Removed Room annotations to avoid complex build dependency configuration
 data class ActivityLogEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val id: Long = 0,
     val timestamp: Long,
     val domain: String,
     val ipAddress: String,

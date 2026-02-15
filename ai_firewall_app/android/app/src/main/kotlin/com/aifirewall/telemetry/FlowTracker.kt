@@ -90,7 +90,7 @@ class FlowTracker {
      * @param isOutbound True if packet is outbound (upload), false if inbound (download)
      */
     fun trackPacket(packet: PacketMetadata, isOutbound: Boolean) {
-        val flowKey = createFlowKey(packet)
+        val flowKey = getFlowKey(packet)
         
         // Get or create flow
         val flow = flows.getOrPut(flowKey) {

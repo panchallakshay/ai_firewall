@@ -250,9 +250,7 @@ class FirewallVpnService : VpnService() {
             val decision = decisionEngine.evaluate(
                 domain = domain,
                 flowStats = flowStats,
-                dstIp = metadata.dstIp,
-                permissionCount = 10,  // TODO: Get actual app permissions
-                isSystemApp = false     // TODO: Check if system app
+                dstIp = metadata.dstIp
             )
             
             // Apply decision

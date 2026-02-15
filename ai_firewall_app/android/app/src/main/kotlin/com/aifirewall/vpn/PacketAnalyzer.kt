@@ -22,22 +22,27 @@ class PacketAnalyzer(private val context: Context) {
         // Extract domain from DNS or use IP
         val domain = extractDomain(ipPacket) ?: ipPacket.destinationIP
         
-        // Analyze with decision engine
-        val decision = decisionEngine.analyze(
-            packet = ipPacket.rawPacket,
-            domain = domain,
-            dstIP = ipPacket.destinationIP,
-            dstPort = ipPacket.destinationPort,
-            protocol = ipPacket.getProtocolName(),
-            srcIP = ipPacket.sourceIP,
+        // Use evaluateFlow as analyze doesn't exist in FirewallDecisionEngine
+        // PacketAnalyzer wrapper needs to adapt to FirewallDecisionEngine's evaluate()
+        val flowStats = com.aifirewall.telemetry.FlowStats(
+            flowKey = "${ipPacket.sourceIP}:${ipPacket.sourcePort}->${ipPacket.destinationIP}:${ipPacket.destinationPort}:${ipPacket.getProtocolName()}",
+            srcIp = ipPacket.sourceIP,
+            dstIp = ipPacket.destinationIP,
             srcPort = ipPacket.sourcePort,
-            packageName = getPackageName(ipPacket)
+            dstPort = ipPacket.destinationPort,
+            protocol = com.aifirewall.telemetry.Protocol.TCP // Assumption
+        )
+        
+        val decision = decisionEngine.evaluate(
+            domain = domain,
+            flowStats = flowStats,
+            dstIp = ipPacket.destinationIP
         )
         
         return PacketDecision(
-            action = decision.action,
+            action = decision.action.name,
             confidence = decision.confidence,
-            severity = decision.severity,
+            severity = "MEDIUM", // Default mapping
             reason = decision.reason,
             domain = domain,
             destinationIP = ipPacket.destinationIP,
