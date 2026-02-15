@@ -181,7 +181,7 @@ object TCPPacket {
         return ipHeader + tcpHeader
     }
     
-    private fun buildIPv4Header(
+    fun buildIPv4Header(
         sourceIP: String,
         destIP: String,
         protocol: Int,
@@ -247,7 +247,7 @@ object TCPPacket {
         return header
     }
     
-    private fun calculateChecksum(data: ByteArray): Int {
+    fun calculateChecksum(data: ByteArray): Int {
         var sum = 0L
         var i = 0
         
@@ -300,7 +300,7 @@ object ICMPPacket {
         return ipHeader + icmpHeader + originalHeader
     }
     
-    private fun buildIPv4Header(
+    fun buildIPv4Header(
         sourceIP: String,
         destIP: String,
         protocol: Int,
