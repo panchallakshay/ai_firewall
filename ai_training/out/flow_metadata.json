@@ -1,0 +1,63 @@
+{
+  "model_type": "flow_anomaly_detection",
+  "version": "1.0",
+  "num_features": 15,
+  "feature_names": [
+    "dst_ip_risk",
+    "dst_port",
+    "protocol",
+    "packets_per_sec",
+    "bytes_per_sec",
+    "upload_download_ratio",
+    "duration_sec",
+    "new_connections_per_min",
+    "unique_dst_ips_per_min",
+    "failure_rate",
+    "app_permission_count",
+    "is_system_app",
+    "install_age_days",
+    "background_restricted",
+    "dst_diversity_entropy"
+  ],
+  "classes": [
+    "ALLOW",
+    "WARN",
+    "BLOCK"
+  ],
+  "scaler": {
+    "mean": [
+      0.0,
+      0.0,
+      0.3645625,
+      174334.9678689803,
+      87327303.54213114,
+      0.0,
+      20.313250707187695,
+      10460063.976565734,
+      2.9955306698944004,
+      0.0,
+      8.4981125,
+      0.10115,
+      183.2763625,
+      0.30015,
+      0.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      0.481307265261839,
+      519289.5887097695,
+      368179328.0971277,
+      1.0,
+      30.22929710056079,
+      31157386.600397464,
+      1.1522459283067354,
+      1.0,
+      3.453171938572508,
+      0.301527241721102,
+      105.40629350882472,
+      0.458323005641427,
+      1.0
+    ]
+  }
+}

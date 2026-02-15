@@ -1,0 +1,25 @@
+[package]
+name = "ai-firewall-threat-registry"
+version = "0.1.0"
+description = "Solana smart contract for AI Firewall threat intelligence registry"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "ai_firewall_threat_registry"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = "0.29.0"
+anchor-spl = "0.29.0"
+
+[dev-dependencies]
+solana-program-test = "1.17"
+solana-sdk = "1.17"
+spl-token = "4.0"

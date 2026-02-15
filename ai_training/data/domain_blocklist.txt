@@ -1,0 +1,9 @@
+# Domain Blocklist
+# Format: exact domain or wildcard (*.example.com)
+malware-test.com
+phishing-example.net
+*.suspicious-ads.tk
+*.tracker.ml
+*.adserver.xyz
+badsite.ru
+evil-domain.cn

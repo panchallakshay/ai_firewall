@@ -1,0 +1,128 @@
+{
+  "version": "1.0",
+  "created_at": "2026-02-08",
+  "models": {
+    "dns": {
+      "filename": "dns_model.tflite",
+      "type": "dns_threat_detection",
+      "num_features": 11,
+      "feature_names": [
+        "domain_length",
+        "num_dots",
+        "entropy",
+        "is_punycode",
+        "digit_ratio",
+        "vowel_ratio",
+        "tld_risk",
+        "max_consecutive_consonants",
+        "queries_per_min",
+        "unique_domains_per_min",
+        "tranco_rank_bucket"
+      ],
+      "classes": [
+        "ALLOW",
+        "WARN",
+        "BLOCK"
+      ],
+      "scaler": {
+        "mean": [
+          15.671868227134807,
+          1.2934842573984318,
+          3.27294456596458,
+          0.0012314300350711274,
+          0.04382978377909278,
+          0.3480717843912118,
+          0.17538519131484565,
+          2.591736611892659,
+          8.013371171918342,
+          4.776466657044748,
+          1.0
+        ],
+        "scale": [
+          9.233534151289362,
+          0.5432201903428626,
+          0.43710241042774306,
+          0.035070124253237966,
+          0.13387718216304126,
+          0.11003379774399705,
+          0.25056812616833735,
+          1.4057199837502636,
+          16.210732137147076,
+          8.745434780605343,
+          1.0
+        ]
+      }
+    },
+    "flow": {
+      "filename": "flow_model.tflite",
+      "type": "flow_anomaly_detection",
+      "num_features": 15,
+      "feature_names": [
+        "dst_ip_risk",
+        "dst_port",
+        "protocol",
+        "packets_per_sec",
+        "bytes_per_sec",
+        "upload_download_ratio",
+        "duration_sec",
+        "new_connections_per_min",
+        "unique_dst_ips_per_min",
+        "failure_rate",
+        "app_permission_count",
+        "is_system_app",
+        "install_age_days",
+        "background_restricted",
+        "dst_diversity_entropy"
+      ],
+      "classes": [
+        "ALLOW",
+        "WARN",
+        "BLOCK"
+      ],
+      "scaler": {
+        "mean": [
+          0.0,
+          0.0,
+          0.3645625,
+          174334.9678689803,
+          87327303.54213114,
+          0.0,
+          20.313250707187695,
+          10460063.976565734,
+          2.9955306698944004,
+          0.0,
+          8.4981125,
+          0.10115,
+          183.2763625,
+          0.30015,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.481307265261839,
+          519289.5887097695,
+          368179328.0971277,
+          1.0,
+          30.22929710056079,
+          31157386.600397464,
+          1.1522459283067354,
+          1.0,
+          3.453171938572508,
+          0.301527241721102,
+          105.40629350882472,
+          0.458323005641427,
+          1.0
+        ]
+      }
+    }
+  },
+  "verdict_policy": {
+    "mode": "balanced",
+    "strike_threshold": 1,
+    "risk_thresholds": {
+      "high": 0.7,
+      "medium": 0.4
+    }
+  }
+}

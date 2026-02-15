@@ -1,0 +1,10 @@
+# Port Blocklist
+# Format: port number (one per line)
+23
+135
+139
+445
+1433
+3389
+5900
+6667

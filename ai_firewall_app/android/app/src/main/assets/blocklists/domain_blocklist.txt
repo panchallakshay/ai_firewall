@@ -1,0 +1,22 @@
+# Domain Blocklist
+# Format: one domain per line
+# Supports wildcards: *.example.com blocks all subdomains
+# Comments start with #
+
+# High-risk TLDs commonly used for malware
+*.tk
+*.ml
+*.ga
+*.cf
+*.gq
+
+# Known malware domains (examples)
+malware-example.com
+phishing-site.net
+evil-domain.tk
+
+# DGA-like patterns (examples)
+xn--random123.com
+abc123xyz.tk
+
+# Add your custom domains below:

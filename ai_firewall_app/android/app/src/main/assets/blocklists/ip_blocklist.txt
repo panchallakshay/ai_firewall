@@ -1,0 +1,16 @@
+# IP Blocklist
+# Format: CIDR notation (192.168.1.0/24) or single IPs
+# Comments start with #
+
+# Private/Reserved ranges (optional - for testing)
+# 192.168.0.0/16
+# 10.0.0.0/8
+
+# Known malicious IP ranges (examples)
+# 203.0.113.0/24
+# 198.51.100.0/24
+
+# Tor exit nodes (optional)
+# Add Tor exit node IPs if you want to block Tor
+
+# Add your custom IPs/ranges below:

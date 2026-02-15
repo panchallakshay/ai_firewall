@@ -1,0 +1,18 @@
+# Port Blocklist
+# Format: one port per line
+# Comments start with #
+
+# Insecure protocols
+23    # Telnet (plaintext credentials)
+21    # FTP (plaintext credentials)
+69    # TFTP (insecure file transfer)
+
+# Commonly exploited ports
+135   # RPC (WannaCry, etc.)
+139   # NetBIOS
+445   # SMB (EternalBlue, ransomware)
+1433  # MSSQL (SQL injection)
+3389  # RDP (brute force attacks)
+5900  # VNC (remote access)
+
+# Add your custom ports below:
