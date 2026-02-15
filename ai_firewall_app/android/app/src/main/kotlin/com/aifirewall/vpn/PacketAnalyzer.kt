@@ -11,10 +11,8 @@ import com.aifirewall.decision.FirewallDecisionEngine
  */
 class PacketAnalyzer(private val context: Context) {
     
-    private val ai: FirewallAI by lazy { FirewallAI(context) }
-    private val rules: RuleEngine by lazy { RuleEngine(context) }
     private val decisionEngine: FirewallDecisionEngine by lazy {
-        FirewallDecisionEngine(context, ai, rules)
+        FirewallDecisionEngine(context)
     }
     
     /**
