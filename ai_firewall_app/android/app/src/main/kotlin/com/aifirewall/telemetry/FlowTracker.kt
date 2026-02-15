@@ -3,12 +3,7 @@ package com.aifirewall.telemetry
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.max
 
-/**
- * Protocol enum
- */
-enum class Protocol {
-    TCP, UDP, ICMP, OTHER
-}
+// Protocol enum removed - using definition from PacketParser.kt
 
 /**
  * Data class for flow statistics
@@ -33,6 +28,17 @@ data class FlowStats(
     fun getBytesPerSec(): Float {
         val duration = max((lastSeenTime - startTime) / 1000f, 1f)
         return byteCount / duration
+    }
+    
+    fun getPacketsPerSec(): Float {
+        val duration = max((lastSeenTime - startTime) / 1000f, 1f)
+        return packetCount / duration
+    }
+
+    fun getUploadDownloadRatio(): Float {
+        val total = uploadBytes + downloadBytes
+        if (total == 0L) return 0f
+        return uploadBytes.toFloat() / total.toFloat()
     }
 }
 
@@ -76,19 +82,19 @@ class FlowTracker {
         // Update stats
         synchronized(flow) {
             flow.packetCount++
-            flow.byteCount += packet.length
+            flow.byteCount += packet.payloadSize // usage of payloadSize instead of length
             flow.lastSeenTime = System.currentTimeMillis()
             
             if (isOutbound) {
-                flow.uploadBytes += packet.length
+                flow.uploadBytes += packet.payloadSize
             } else {
-                flow.downloadBytes += packet.length
+                flow.downloadBytes += packet.payloadSize
             }
         }
         
         // Update global stats
         globalStats.totalPackets++
-        globalStats.totalBytes += packet.length
+        globalStats.totalBytes += packet.payloadSize
     }
     
     /**
