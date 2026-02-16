@@ -14,7 +14,8 @@ import kotlinx.coroutines.*
  */
 class TCPForwarder(
     private val connectionManager: TCPConnectionManager,
-    private val tunOutput: FileOutputStream
+    private val tunOutput: FileOutputStream,
+    private val vpnService: android.net.VpnService
 ) {
     
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -106,6 +107,13 @@ class TCPForwarder(
         socket.soTimeout = SOCKET_TIMEOUT_MS
         socket.tcpNoDelay = true
         socket.keepAlive = true
+        
+        // Protect socket from VPN to avoid loop
+        if (!vpnService.protect(socket)) {
+            Log.e(TAG, "Failed to protect socket for $dstIp:$dstPort")
+            throw java.io.IOException("Failed to protect socket")
+        }
+        
         socket.connect(InetSocketAddress(dstIp, dstPort), SOCKET_TIMEOUT_MS)
         
         Log.d(TAG, "Created socket to $dstIp:$dstPort")

@@ -14,17 +14,20 @@ import kotlin.random.Random
  * Handles both TCP and UDP forwarding with NAT translation
  */
 class UnifiedPacketForwarder(
-    private val tunOutput: FileOutputStream
+    private val tunOutput: FileOutputStream,
+    private val vpnService: android.net.VpnService
 ) {
     
     // TCP components
     private val tcpConnectionManager = TCPConnectionManager()
-    private val tcpForwarder = TCPForwarder(tcpConnectionManager, tunOutput)
+    private val tcpForwarder = TCPForwarder(tcpConnectionManager, tunOutput, vpnService)
     
     // UDP components
     private val udpPortMap = ConcurrentHashMap<String, Int>()
     private val reverseUdpMap = ConcurrentHashMap<Int, String>()
-    private val udpSocket = DatagramSocket()
+    private val udpSocket = DatagramSocket().apply {
+        vpnService.protect(this)
+    }
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     
     // Port range for UDP NAT translation

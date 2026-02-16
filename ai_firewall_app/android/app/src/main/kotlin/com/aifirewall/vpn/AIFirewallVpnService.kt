@@ -81,8 +81,8 @@ class AIFirewallVpnService : VpnService() {
             inputStream = FileInputStream(vpnInterface!!.fileDescriptor)
             outputStream = FileOutputStream(vpnInterface!!.fileDescriptor)
             
-            // Initialize unified forwarder with output stream
-            unifiedForwarder = UnifiedPacketForwarder(outputStream!!)
+            // Initialize unified forwarder with output stream and VPN service
+            unifiedForwarder = UnifiedPacketForwarder(outputStream!!, this)
             
             isRunning = true
             
