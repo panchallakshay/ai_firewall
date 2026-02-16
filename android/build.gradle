@@ -1,0 +1,98 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.shakti.firewall'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.shakti.firewall"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Configure NDK
+        ndk {
+            // Specify ABIs to build
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64'
+        }
+        
+        externalNativeBuild {
+            cmake {
+                // Pass arguments to CMake
+                arguments "-DANDROID_STL=c++_shared"
+                arguments "-DPYTHON_INCLUDE_DIR=${project.projectDir}/python/include/python3.9"
+                arguments "-DPYTHON_LIBRARY=${project.projectDir}/python/lib/\${ANDROID_ABI}/libpython3.9.so"
+                
+                // C++ flags
+                cppFlags "-std=c++17", "-frtti", "-fexceptions"
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    // Configure native build
+    externalNativeBuild {
+        cmake {
+            path file('cpp/CMakeLists.txt')
+            version '3.18.1'
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    
+    // Configure source sets to include Kotlin bridge
+    sourceSets {
+        main {
+            java.srcDirs += 'kotlin'
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+// Task to verify native library is built
+task verifyNativeLib {
+    doLast {
+        def libPath = "${buildDir}/intermediates/cmake/debug/obj"
+        def libFile = new File(libPath, "arm64-v8a/libshakti_bridge.so")
+        
+        if (libFile.exists()) {
+            println "✓ Native library built successfully: ${libFile.absolutePath}"
+            println "  Size: ${libFile.length()} bytes"
+        } else {
+            println "✗ Native library not found at: ${libFile.absolutePath}"
+        }
+    }
+}
+
+// Run verification after build
+tasks.named("assembleDebug").configure {
+    finalizedBy verifyNativeLib
+}
